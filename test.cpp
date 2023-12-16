@@ -1,95 +1,77 @@
 #include <stdio.h>
 #include <string.h>
 
-char text[256];
-char pattern[256];
-int next[1024];
+#define MAX_LENGTH 256
 
-void getNext()
-{
-    int pLen = strlen(pattern);
+char text[MAX_LENGTH];
+char pattern[MAX_LENGTH];
+int next[MAX_LENGTH];
+int pattern_length;
+int text_length;
+
+// 计算部分匹配表（Next 数组）
+void Next() {
     next[0] = -1;
     int i = 0;
     int j = -1;
-    while (i < pLen - 1)
-    {
-        if (j == -1 || pattern[i] == pattern[j])
-        {
+
+    while (i < pattern_length - 1) {
+        if (j == -1 || pattern[i] == pattern[j]) {
             i++;
             j++;
-            if (pattern[i] == pattern[j])
-            {
-                next[i] = next[j];
-            }
-            else
-            {
-                next[i] = j;
-            }
-        }
-        else
-        {
+            next[i] = (pattern[i] == pattern[j]) ? next[j] : j;
+        } else {
             j = next[j];
         }
     }
 }
 
-int kmp(int start)
-{
-    int pLen = strlen(pattern);
-    int tLen = strlen(text);
+// KMP算法匹配
+int kmp(int start) {
     int i = start;
     int j = 0;
-    while (i < tLen && j < pLen)
-    {
-        if (j == -1 || text[i] == pattern[j])
-        {
-            ++i;
-            ++j;
-        }
-        else
-        {
+
+    while (i < text_length && j < pattern_length) {
+        if (j == -1 || text[i] == pattern[j]) {
+            i++;
+            j++;
+        } else {
             j = next[j];
         }
     }
-    if (j == pLen)
-    {
-        return i - j;
-    }
-    else
-    {
-        return -1;
-    }
+
+    return (j == pattern_length) ? i - j : -1;
 }
 
-int main()
-{
-    printf("Please enter the text:\n");
-    scanf("%s",text);
-    printf("\nPlease enter the pattern:\n");
+int main() {
+    printf("请输入主字符串:\n");
+    scanf("%s", text);
+    printf("请输入待匹配模式串:\n");
     scanf("%s", pattern);
-    getNext();
+
+    pattern_length = strlen(pattern);
+    text_length = strlen(text);
+
+    Next();
+
     int start = 0;
-    int flag = 0;
+    int matched = 0;
     int pos;
-    int tLen = strlen(text);
-    while (start < tLen)
-    {
+
+    while (start < text_length) {
         pos = kmp(start);
-        if (pos != -1)
-        {
-            printf("A match occurs at %d\n", pos + 1);
+        if (pos != -1) {
+            printf("在位置%d处匹配\n", pos);
             start = pos + 1;
-            flag = 1;
-        }
-        else
-        {
+            matched = 1;
+        } else {
             break;
         }
     }
-    if (!flag)
-    {
-        printf("No match.");
+
+    if (matched == 0) {
+        printf("没有相匹配的位置\n");
     }
-    printf("\n");
+
     return 0;
 }
