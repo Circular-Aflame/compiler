@@ -5,6 +5,8 @@ char text[256];
 char pattern[256];
 int next[1024];
 
+// 注释一
+/* 注释二 */
 void getNext()
 {
     int pLen = strlen(pattern);
