@@ -165,17 +165,14 @@ def t_error(t):
 lexer = lex.lex()
 
 
-# 测试程序
+# 测试入口
 if __name__ == '__main__':
-    try:
-        filepath = input('lex > ')
-        with open(filepath, 'r') as file:
-            data = file.read()
-            lexer.input(data)
-        while True:
-            tok = lexer.token()
-            if not tok:
-                break
-            print(tok)
-    except EOFError:
-        print('over.')
+    filepath = input('Input file path: ')
+    with open(filepath, 'r') as file:
+        data = file.read()
+        lexer.input(data)
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+        print(tok)
