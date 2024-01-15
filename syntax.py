@@ -1,3 +1,7 @@
+import re
+import ply.yacc as yacc
+from lexical import tokens,identifier,lexer
+
 # 语法树基类
 class Node:
     def __init__(self, type):
@@ -37,10 +41,7 @@ def printAST(node):
             ret.append(printAST(kid))
         return {node.type:ret}
 
-
-import re
-import ply.yacc as yacc
-from lexical import tokens, identifier,lexer
+# 语法规则定义
 
 reserved_list = ['true', 'false']
 
