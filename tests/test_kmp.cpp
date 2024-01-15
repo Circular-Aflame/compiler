@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-
+#include "testhead.h"
 #define MAX_LENGTH 256
 
 char text[MAX_LENGTH];
@@ -45,9 +43,17 @@ int kmp(int start) {
 
 int main() {
     printf("请输入主字符串:\n");
-    scanf("%s", text);
+    fgets(text, sizeof(text), stdin);
     printf("请输入待匹配模式串:\n");
-    scanf("%s", pattern);
+    fgets(pattern, sizeof(pattern), stdin);
+
+    if (text[strlen(text) - 1] == '\n') {
+        text[strlen(text) - 1] = '\0';
+    }
+
+    if (pattern[strlen(pattern) - 1] == '\n') {
+        pattern[strlen(pattern) - 1] = '\0';
+    }
 
     pattern_length = strlen(pattern);
     text_length = strlen(text);

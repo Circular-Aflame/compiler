@@ -1,19 +1,22 @@
-#include <stdio.h>
+#include "testhead.h"
 
 int main()
 {
-	int i, n=0;
-	char a[999];
-	char *p = a;
-	printf("输入待检测字符串：");
-	gets(a);
-	while(a[n])n++;
-	for(i = 0; *(p+i) == *(p + n - 1); i++) {
-        n--;
+	char s[100];
+    printf("请输入字符串:\n");    
+	fgets(s, sizeof(s), stdin);
+    int len = strlen(s);
+	if (s[len - 1] == '\n') {
+        s[len - 1] = '\0';
+		len--;
     }
-	if(n -i <= 2)  
-        printf("该字符串回文yes\n");
-	else
-        printf("该字符串不回文no\n");
+    int mid = len / 2;
+    for (int i = 0; i < len / 2; i++) {
+        if (s[i] != s[len - 1 - i]) {
+            printf("不是回文字符串\n");
+            return 0;
+        }
+    }
+    printf("是回文字符串\n");
     return 0;
 }
