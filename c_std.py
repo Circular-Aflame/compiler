@@ -56,6 +56,30 @@ def strlen_0(s):
         return _len
 '''
 
+# C 中的fgets函数
+fgets_py = '''
+def fgets_0(s, size, stream):
+    s_in = input()
+    for i, c in enumerate(s_in):
+        if i == size - 1:
+            break
+        s[i] = c
+    s[size - 1] = '\\0'
+'''
+
+# C 中的sizeof函数
+sizeof_py = '''
+def sizeof_0(s):
+    if isinstance(s, str):
+        return len(s) + 1
+    else:
+        _len = 0
+        for i in s:
+            if i is None:
+                break
+            _len += 1
+        return _len + 1
+'''
 
 
-c_stds = [strlen_py, gets_py, printf_py, scanf_py]
+c_stds = [strlen_py, gets_py, printf_py, scanf_py, fgets_py, sizeof_py]
